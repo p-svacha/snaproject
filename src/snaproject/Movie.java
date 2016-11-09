@@ -13,17 +13,7 @@ import org.json.JSONObject;
 public class Movie {
 	
 	
-	public static void main(String[] args) throws Exception{
-		ArrayList<JSONObject> list = readFile("testinput.txt");
-//		for(JSONObject o : list) {
-//			System.out.println("Name: " + o.get("Title") + ", Year: " + o.get("Year"));
-//		}
-		for(String o : getAttributes(list.get(0))) {
-			System.out.println(o);
-		}
-	}
-	
-	private static ArrayList<String> getTitles(JSONObject o) {
+	static ArrayList<String> getTitles(JSONObject o) {
 		Iterator<String> i = o.keys();
 		
 		ArrayList<String> list = new ArrayList<String>();
@@ -33,30 +23,40 @@ public class Movie {
 		return list;
 	}
 	
-	private static ArrayList<String> getAttributes(JSONObject o) {
+	static ArrayList<String> getAttributes(JSONObject o) {
 		Iterator<String> i = o.keys();
 		ArrayList<String> list = new ArrayList<String>();
 		while(i.hasNext()) {
-			list.add(o.getString(i.next()));
+			String s = i.next();
+			list.add(o.getString(s));
 		}
 		return list;
 	}
 	
-	private static ArrayList<JSONObject> readFile(String path) throws Exception{
+	static ArrayList<JSONObject> readFile(String path) throws Exception{
 		ArrayList<JSONObject> list = new ArrayList<JSONObject>();
 
 		Scanner in = new Scanner(new File(path));
 		
 		while(in.hasNextLine()) {
 			String s = in.nextLine();
+			s = s.replaceAll(" ", "%20");
+			
 			String json = readUrl("http://www.omdbapi.com/?t=" + s + "&y=&plot=short&r=json");
-			list.add(new JSONObject(json));
+			JSONObject obj = new JSONObject(json);
+			if(!obj.keys().next().equals("Response")) {
+				System.out.println(s);
+				list.add(obj);
+			}
+			else {
+				System.out.println("-----------DELETED---------------");
+			}
 		}
 		in.close();
 		return list;
 	}
 	
-	private static String readUrl(String urlString) throws Exception {
+	static String readUrl(String urlString) throws Exception {
 	    BufferedReader reader = null;
 	    try {
 	        URL url = new URL(urlString);
