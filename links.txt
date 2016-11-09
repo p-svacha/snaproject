@@ -1,0 +1,2 @@
+Filmliste:	https://en.wikiquote.org/wiki/List_of_films
+API:		https://www.omdbapi.com/
