@@ -40,6 +40,18 @@ public class Movie {
 		
 		while(in.hasNextLine()) {
 			String s = in.nextLine();
+			if(s.contains(", The")) {
+				s = s.replace(", The", "");
+				s = "The ".concat(s);
+			}
+			else if(s.contains(", An")) {
+				s = s.replace(", An", "");
+				s = "An ".concat(s);
+			}
+			else if(s.contains(", A")) {
+				s = s.replace(", A", "");
+				s = "A ".concat(s);
+			}
 			s = s.replaceAll(" ", "%20");
 			
 			String json = readUrl("http://www.omdbapi.com/?t=" + s + "&y=&plot=short&r=json");

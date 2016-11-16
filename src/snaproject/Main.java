@@ -12,7 +12,7 @@ public class Main {
         String csvFile = "test.csv";
         FileWriter writer = new FileWriter(csvFile);
         ArrayList<JSONObject> list = new ArrayList<JSONObject>();
-        list = Movie.readFile("test2.txt");
+        list = Movie.readFile("full_input.txt");
 
         
         //CSVUtils.writeLine(writer, Arrays.asList("aaa", "bb,b", "cc,c"), '\t');
